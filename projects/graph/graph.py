@@ -3,8 +3,6 @@ Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
 
-# initial commit
-
 class Graph:
 
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
@@ -15,19 +13,23 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        if vertex_id not in self.vertices:
+            self.vertices[vertex_id] = set()
+
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        if v1 and v2 in self.vertices:
+            self.vertices[v1].add(v2)
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[vertex_id] if vertex_id in self.vertices \
+        else set()
 
     def bft(self, starting_vertex):
         """
@@ -51,6 +53,7 @@ class Graph:
 
             # check if we've yet visited
             if current_node not in visited:
+                print(current_node)
 
             ## if not, we go to the node
             ### mark as visited == add to visited set
