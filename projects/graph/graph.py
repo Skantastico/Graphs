@@ -108,9 +108,8 @@ class Graph:
             if len(neighbors) == 0:
                 return
 
-            else:
-                for neighbor in neighbors:
-                    self.dft_recursive(neighbor, visited)
+            for neighbor in neighbors:
+                self.dft_recursive(neighbor, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -133,10 +132,10 @@ class Graph:
 
             if current_node not in visited:
                 visited.add(current_node)
-                neighbors = self.get_neighbors(current_node)
 
+                neighbors = self.get_neighbors(current_node)
                 for neighbor in neighbors:
-                    path_copy = [neighbor] + current_path
+                    path_copy = current_path + [neighbor]
                     q.enqueue(path_copy)
 
     def dfs(self, starting_vertex, destination_vertex):
@@ -160,13 +159,16 @@ class Graph:
 
             if current_node not in visited:
                 visited.add(current_node)
-                neighbors = self.get_neighbors(current_node)
 
+                neighbors = self.get_neighbors(current_node)
                 for neighbor in neighbors:
-                    path_copy = [neighbor] + current_path
+                    path_copy = current_path + [neighbor]
                     s.push(path_copy)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+    def dfs_recursive(self,
+                      current_path,
+                      destination_vertex,
+                      visited=set()):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -174,7 +176,23 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        if type(current_path) == int:
+            current_path = [current_path]
+
+        current_node = current_path[-1]
+
+        if current_node == destination_vertex:
+            return current_path
+
+        if current_node not in visited:
+            visited.add(current_node)
+            neighbors = self.get_neighbors(current_node)
+
+            for neighbor in neighbors:
+                path_copy = current_path + [neighbor]
+                path = self.dfs_recursive(path_copy, destination_vertex, visited)
+                if path != None:
+                    return path
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
