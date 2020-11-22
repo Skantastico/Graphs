@@ -1,6 +1,12 @@
 import random
 import sys
-sys.path.append("projects/graph")
+
+#run this path for windows
+# sys.path.append("projects/graph")
+
+# run this path for linux
+sys.path.append("/home/ivan/Desktop/Lambda/CS/Graphs/Graphs/projects/graph")
+
 from util import Queue
 
 class User:
