@@ -1,4 +1,7 @@
 import random
+import sys
+sys.path.append("projects/graph")
+from util import Queue
 
 class User:
     def __init__(self, name):
@@ -84,9 +87,26 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
-        return visited
 
+        visited[user_id] = [user_id]
+
+        q = Queue()
+        q.enqueue(user_id)
+
+        while q.size() > 0:
+            current_friend_id = q.dequeue()
+            friend_of_current_friend = self.friendships[current_friend_id]
+
+            for friend_id in friend_of_current_friend:
+                if friend_id not in visited:
+                    q.enqueue(friend_id)
+
+
+                    path_to_new_friend = list(visited[current_friend_id])
+                    path_to_new_friend.append(friend_id)
+                    visited[friend_id] = path_to_new_friend
+
+        return visited
 
 if __name__ == '__main__':
     sg = SocialGraph()
